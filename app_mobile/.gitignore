@@ -1,0 +1,90 @@
+# =========================
+# FLUTTER / DART
+# =========================
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Ignore Flutter SDK (IMPORTANT)
+flutter/
+
+# Generated files
+**/doc/api/
+**/ios/Flutter/.last_build_id
+
+# =========================
+# ANDROID
+# =========================
+/android/app/debug
+/android/app/profile
+/android/app/release
+/android/.gradle/
+/android/local.properties
+
+# =========================
+# IOS
+# =========================
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# =========================
+# WINDOWS / LINUX / MACOS
+# =========================
+windows/flutter/generated_plugin_registrant.*
+linux/flutter/generated_plugin_registrant.*
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# =========================
+# IDE / EDITORS
+# =========================
+.idea/
+*.iml
+*.ipr
+*.iws
+
+.vscode/   # (décommente si tu veux ignorer VS Code)
+
+# =========================
+# SYSTEM FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# LOGS & TEMP FILES
+# =========================
+*.log
+*.tmp
+*.swp
+*.pyc
+*.class
+
+# =========================
+# GIT
+# =========================
+.git/
+.gitignore
+
+# =========================
+# MISC
+# =========================
+.history
+.svn/
+.atom/
+.build/
+.buildlog/
+.swiftpm/
+migrate_working_dir/
+
+# =========================
+# OBFUSCATION / SYMBOLS
+# =========================
+app.*.symbols
+app.*.map.json
