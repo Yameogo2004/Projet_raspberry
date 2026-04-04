@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../services/api_service.dart';
+import '../../../data/services/api_service.dart';
 import '../reservation/reservation_form_screen.dart';
 import '../parking/active_parking_screen.dart';
 import '../profile/profile_screen.dart';

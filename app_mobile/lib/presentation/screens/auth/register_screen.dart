@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../services/auth_service.dart';
+import '../../../data/services/auth_service.dart';
+import '../../../presentation/widgets/buttons/custom_button.dart';
+import '../../../presentation/widgets/fields/custom_text_field.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,17 +26,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   static const Color primaryColor = Color(0xFF1E3A5F);
 
-  @override
-  void dispose() {
-    _nomController.dispose();
-    _prenomController.dispose();
-    _emailController.dispose();
-    _telephoneController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
-
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -56,7 +47,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           const SnackBar(
             content: Text('Inscription réussie ! Connectez-vous'),
             backgroundColor: Colors.green,
-            duration: Duration(seconds: 3),
           ),
         );
         Navigator.pushReplacement(
@@ -96,8 +86,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 20),
-                
-                // Logo
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -111,8 +99,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
-                // Titre
                 Text(
                   'Inscription',
                   textAlign: TextAlign.center,
@@ -129,94 +115,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 const SizedBox(height: 30),
-                
-                // Champ NOM
                 TextFormField(
                   controller: _nomController,
                   decoration: InputDecoration(
                     labelText: 'Nom',
-                    hintText: 'Entrez votre nom',
                     prefixIcon: const Icon(Icons.person_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: primaryColor, width: 2),
                     ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.red, width: 1),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer votre nom';
                     }
-                    if (value.length < 2) {
-                      return 'Nom trop court';
-                    }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
-                
-                // Champ PRÉNOM
                 TextFormField(
                   controller: _prenomController,
                   decoration: InputDecoration(
                     labelText: 'Prénom',
-                    hintText: 'Entrez votre prénom',
                     prefixIcon: const Icon(Icons.person_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: primaryColor, width: 2),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer votre prénom';
                     }
-                    if (value.length < 2) {
-                      return 'Prénom trop court';
-                    }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
-                
-                // Champ EMAIL
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    hintText: 'exemple@email.com',
                     prefixIcon: const Icon(Icons.email_outlined),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: primaryColor, width: 2),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
@@ -224,61 +170,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return 'Veuillez entrer votre email';
                     }
                     if (!value.contains('@')) {
-                      return 'Email invalide (doit contenir @)';
-                    }
-                    if (!value.contains('.')) {
-                      return 'Email invalide (doit contenir un domaine)';
+                      return 'Email invalide';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
-                
-                // Champ TÉLÉPHONE
                 TextFormField(
                   controller: _telephoneController,
                   decoration: InputDecoration(
                     labelText: 'Téléphone',
-                    hintText: '0612345678',
                     prefixIcon: const Icon(Icons.phone_outlined),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: primaryColor, width: 2),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   ),
                   keyboardType: TextInputType.phone,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer votre téléphone';
                     }
-                    if (value.length < 10) {
-                      return 'Numéro de téléphone invalide';
-                    }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
-                
-                // Champ MOT DE PASSE
                 TextFormField(
                   controller: _passwordController,
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
                     labelText: 'Mot de passe',
-                    hintText: 'Minimum 6 caractères',
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                        color: Colors.grey.shade600,
                       ),
                       onPressed: () {
                         setState(() {
@@ -286,43 +212,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         });
                       },
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: primaryColor, width: 2),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer un mot de passe';
                     }
                     if (value.length < 6) {
-                      return 'Le mot de passe doit contenir au moins 6 caractères';
+                      return 'Au moins 6 caractères';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
-                
-                // Champ CONFIRMATION MOT DE PASSE
                 TextFormField(
                   controller: _confirmPasswordController,
                   obscureText: _obscureConfirmPassword,
                   decoration: InputDecoration(
                     labelText: 'Confirmer le mot de passe',
-                    hintText: 'Retaper votre mot de passe',
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
-                        color: Colors.grey.shade600,
                       ),
                       onPressed: () {
                         setState(() {
@@ -330,22 +245,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         });
                       },
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(color: primaryColor, width: 2),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Veuillez confirmer votre mot de passe';
+                      return 'Confirmez votre mot de passe';
                     }
                     if (value != _passwordController.text) {
                       return 'Les mots de passe ne correspondent pas';
@@ -354,8 +262,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 30),
-                
-                // Bouton INSCRIPTION
                 ElevatedButton(
                   onPressed: _isLoading ? null : _register,
                   style: ElevatedButton.styleFrom(
@@ -376,22 +282,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         )
                       : const Text(
                           "S'INSCRIRE",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                 ),
                 const SizedBox(height: 16),
-                
-                // Lien vers connexion
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Déjà un compte ? ",
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
+                    const Text("Déjà un compte ? "),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
@@ -401,36 +299,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       child: Text(
                         "Se connecter",
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
-                ),
-                
-                const SizedBox(height: 20),
-                
-                // Message informatif
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: primaryColor.withOpacity(0.05),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.info_outline, size: 16, color: primaryColor),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'En créant un compte, vous acceptez nos conditions d\'utilisation.',
-                          style: TextStyle(fontSize: 11, color: Colors.grey[600]),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ],
             ),

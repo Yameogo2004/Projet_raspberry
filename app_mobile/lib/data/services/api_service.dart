@@ -35,7 +35,7 @@ class ApiService {
     return _handleResponse(response);
   }
 
-  static Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
+  static Future<dynamic> put(String endpoint, Map<String,dynamic> data) async {
     final response = await http.put(
       Uri.parse('$baseUrl$endpoint'),
       headers: await _getHeaders(),

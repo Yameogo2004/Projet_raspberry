@@ -12,7 +12,7 @@ class Admin extends User {
     required super.telephone,
     required super.role,
     super.carteBancaireId,
-    super.notificationsActives,
+    super.notificationsActives,  // ← Plus besoin de valeur, User a une valeur par défaut
     required this.niveauAcces,
     required this.service,
   });
@@ -30,5 +30,10 @@ class Admin extends User {
       niveauAcces: json['niveau_acces'],
       service: json['service'],
     );
+  }
+
+  @override
+  String toString() {
+    return 'Admin(nomComplet: $nomComplet, niveauAcces: $niveauAcces, service: $service)';
   }
 }

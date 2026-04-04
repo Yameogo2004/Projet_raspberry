@@ -16,10 +16,11 @@ class User {
     required this.telephone,
     required this.role,
     this.carteBancaireId,
-    this.notificationsActives = true,  // ← VALEUR PAR DÉFAUT (pas required)
+    this.notificationsActives = true,  // ← AJOUTER VALEUR PAR DÉFAUT
   });
 
   String get nomComplet => '$prenom $nom';
+  bool get isAdmin => role == 'admin';
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

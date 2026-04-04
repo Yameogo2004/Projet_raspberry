@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:math' as math;
-import '../../services/api_service.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text_field.dart';
+import '../../../data/services/api_service.dart';
+import '../../../presentation/widgets/custom_button.dart';
+import '../../../presentation/widgets/custom_text_field.dart';
 import 'reservation_history_screen.dart';
 import '../payment/payment_screen.dart';
 

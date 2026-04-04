@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/user.dart';
-import '../services/auth_service.dart';
+import '../data/models/user.dart';           // ← NOUVEAU CHEMIN
+import '../data/services/auth_service.dart'; // ← NOUVEAU CHEMIN
 
 class AuthProvider extends ChangeNotifier {
   User? _user;
