@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../data/services/auth_service.dart';
-import '../../../presentation/widgets/buttons/custom_button.dart';
-import '../../../presentation/widgets/fields/custom_text_field.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/auth_provider.dart';
+import 'package:app_mobile/data/services/auth_service.dart';
+import '../../widgets/buttons/custom_button.dart';
+import '../../widgets/fields/custom_text_field.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,20 +26,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
-  static const Color primaryColor = Color(0xFF1E3A5F);
+  @override
+  void dispose() {
+    _nomController.dispose();
+    _prenomController.dispose();
+    _emailController.dispose();
+    _telephoneController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
 
-    final result = await AuthService.register({
-      'nom': _nomController.text.trim(),
-      'prenom': _prenomController.text.trim(),
-      'email': _emailController.text.trim(),
-      'telephone': _telephoneController.text.trim(),
-      'password': _passwordController.text,
-    });
+    // ✅ CORRIGÉ : appel avec paramètres nommés
+    final result = await AuthService.register(
+      nom: _nomController.text.trim(),
+      prenom: _prenomController.text.trim(),
+      email: _emailController.text.trim(),
+      telephone: _telephoneController.text.trim(),
+      password: _passwordController.text,
+    );
 
     setState(() => _isLoading = false);
 
@@ -73,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         title: const Text('Créer un compte'),
         centerTitle: true,
-        backgroundColor: primaryColor,
+        backgroundColor: const Color(0xFF1E3A5F),
         elevation: 0,
         foregroundColor: Colors.white,
       ),
@@ -89,23 +101,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: primaryColor.withOpacity(0.1),
+                    color: const Color(0xFF1E3A5F).withOpacity(0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.person_add,
                     size: 40,
-                    color: primaryColor,
+                    color: Color(0xFF1E3A5F),
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text(
+                const Text(
                   'Inscription',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: primaryColor,
+                    color: Color(0xFF1E3A5F),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -115,17 +127,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 const SizedBox(height: 30),
-                TextFormField(
+                CustomTextField(
                   controller: _nomController,
-                  decoration: InputDecoration(
-                    labelText: 'Nom',
-                    prefixIcon: const Icon(Icons.person_outline),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: primaryColor, width: 2),
-                    ),
-                  ),
+                  label: 'Nom',
+                  prefixIcon: Icons.person,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer votre nom';
@@ -134,17 +139,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
                   controller: _prenomController,
-                  decoration: InputDecoration(
-                    labelText: 'Prénom',
-                    prefixIcon: const Icon(Icons.person_outline),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: primaryColor, width: 2),
-                    ),
-                  ),
+                  label: 'Prénom',
+                  prefixIcon: Icons.person_outline,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Veuillez entrer votre prénom';
@@ -153,17 +151,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
                   controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    prefixIcon: const Icon(Icons.email_outlined),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: primaryColor, width: 2),
-                    ),
-                  ),
+                  label: 'Email',
+                  prefixIcon: Icons.email,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -176,17 +167,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
                   controller: _telephoneController,
-                  decoration: InputDecoration(
-                    labelText: 'Téléphone',
-                    prefixIcon: const Icon(Icons.phone_outlined),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: primaryColor, width: 2),
-                    ),
-                  ),
+                  label: 'Téléphone',
+                  prefixIcon: Icons.phone,
                   keyboardType: TextInputType.phone,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -196,27 +180,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
                   controller: _passwordController,
+                  label: 'Mot de passe',
+                  prefixIcon: Icons.lock,
                   obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                    labelText: 'Mot de passe',
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
                     ),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: primaryColor, width: 2),
-                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -229,27 +206,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                TextFormField(
+                CustomTextField(
                   controller: _confirmPasswordController,
+                  label: 'Confirmer le mot de passe',
+                  prefixIcon: Icons.lock_outline,
                   obscureText: _obscureConfirmPassword,
-                  decoration: InputDecoration(
-                    labelText: 'Confirmer le mot de passe',
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscureConfirmPassword = !_obscureConfirmPassword;
-                        });
-                      },
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
                     ),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: primaryColor, width: 2),
-                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureConfirmPassword = !_obscureConfirmPassword;
+                      });
+                    },
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -262,28 +232,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: _isLoading ? null : _register,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: _isLoading
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Text(
-                          "S'INSCRIRE",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
+                CustomButton(
+                  text: "S'inscrire",
+                  onPressed: _register,
+                  isLoading: _isLoading,
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -297,10 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           MaterialPageRoute(builder: (_) => const LoginScreen()),
                         );
                       },
-                      child: Text(
-                        "Se connecter",
-                        style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
-                      ),
+                      child: const Text("Se connecter"),
                     ),
                   ],
                 ),

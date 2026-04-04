@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../data/models/payment_method.dart';
-import '../../../data/services/api_service.dart';
+import '../../../../data/models/payment_method.dart';
+import '../../../../data/services/api_service.dart';
 
 class PaymentScreen extends StatefulWidget {
   final double montant;

@@ -2,22 +2,46 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
+  final String? label;  // ← AJOUTÉ (alias pour text)
   final VoidCallback onPressed;
   final bool isLoading;
   final bool isOutlined;
   final Color? color;
+  final IconData? leadingIcon;  // ← AJOUTÉ
+  final IconData? trailingIcon; // ← AJOUTÉ
 
   const CustomButton({
     super.key,
-    required this.text,
+    this.text = '',
+    this.label,
     required this.onPressed,
     this.isLoading = false,
     this.isOutlined = false,
     this.color,
+    this.leadingIcon,
+    this.trailingIcon,
   });
+
+  String get _text => label ?? text;
 
   @override
   Widget build(BuildContext context) {
+    final buttonContent = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (leadingIcon != null) ...[
+          Icon(leadingIcon, size: 18),
+          const SizedBox(width: 8),
+        ],
+        Text(_text),
+        if (trailingIcon != null) ...[
+          const SizedBox(width: 8),
+          Icon(trailingIcon, size: 18),
+        ],
+      ],
+    );
+
     if (isOutlined) {
       return OutlinedButton(
         onPressed: isLoading ? null : onPressed,
@@ -26,8 +50,7 @@ class CustomButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          side: BorderSide(color: color ?? Theme.of(context).primaryColor),
-          foregroundColor: color ?? Theme.of(context).primaryColor,  // ← Ajouté
+          side: BorderSide(color: color ?? Colors.blue),
         ),
         child: isLoading
             ? const SizedBox(
@@ -35,13 +58,7 @@ class CustomButton extends StatelessWidget {
                 width: 20,
                 child: CircularProgressIndicator(strokeWidth: 2),
               )
-            : Text(
-                text,
-                style: TextStyle(
-                  color: color ?? Theme.of(context).primaryColor,  // ← Ajouté
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            : buttonContent,
       );
     }
     
@@ -52,8 +69,7 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        backgroundColor: color ?? Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,  // ← AJOUTÉ : force texte en blanc
+        backgroundColor: color ?? Colors.blue,
       ),
       child: isLoading
           ? const SizedBox(
@@ -64,14 +80,7 @@ class CustomButton extends StatelessWidget {
                 color: Colors.white,
               ),
             )
-          : Text(
-              text,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,  // ← AJOUTÉ : force blanc
-              ),
-            ),
+          : buttonContent,
     );
   }
 }

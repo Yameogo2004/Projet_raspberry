@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../data/models/user.dart';           // ← NOUVEAU CHEMIN
-import '../data/services/auth_service.dart'; // ← NOUVEAU CHEMIN
+import 'package:app_mobile/data/models/user.dart';
+import 'package:app_mobile/data/services/auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   User? _user;
@@ -10,6 +10,7 @@ class AuthProvider extends ChangeNotifier {
   User? get user => _user;
   bool get isLoading => _isLoading;
   bool get isLoggedIn => _isLoggedIn;
+  bool get isAdmin => _user?.role == 'admin';
 
   AuthProvider() {
     _checkAuthStatus();
@@ -22,9 +23,10 @@ class AuthProvider extends ChangeNotifier {
     _isLoggedIn = await AuthService.isLoggedIn();
     
     if (_isLoggedIn) {
-      final result = await AuthService.getUserInfo();
-      if (result['success']) {
-        _user = User.fromJson(result['user']);
+      // ✅ CORRIGÉ : utiliser getCurrentUser()
+      final user = await AuthService.getCurrentUser();
+      if (user != null) {
+        _user = user;
       }
     }
     
@@ -32,8 +34,12 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> initializeAuth() async {
+    await _checkAuthStatus();
+  }
+
   Future<Map<String, dynamic>> login(String email, String password) async {
-    final result = await AuthService.login(email, password);
+    final result = await AuthService.login(email: email, password: password);
     
     if (result['success']) {
       _user = result['user'];
@@ -45,7 +51,13 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> register(Map<String, dynamic> userData) async {
-    final result = await AuthService.register(userData);
+    final result = await AuthService.register(
+      nom: userData['nom'],
+      prenom: userData['prenom'],
+      email: userData['email'],
+      telephone: userData['telephone'],
+      password: userData['password'],
+    );
     return result;
   }
 

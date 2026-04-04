@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/auth_provider.dart';
-import '../../../data/services/api_service.dart';
-import '../reservation/reservation_form_screen.dart';
-import '../parking/active_parking_screen.dart';
-import '../profile/profile_screen.dart';
+import 'package:app_mobile/providers/auth_provider.dart';
+import 'package:app_mobile/data/services/api_service.dart';
+import 'package:app_mobile/presentation/screens/client/reservation/reservation_form_screen.dart';
+import 'package:app_mobile/presentation/screens/client/parking/active_parking_screen.dart';
+import 'package:app_mobile/presentation/screens/client/profile/profile_screen.dart';
+import 'package:app_mobile/presentation/screens/client/settings/language_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/admin_provider.dart';  // ✅ AJOUTEZ CET IMPORT
 import 'presentation/screens/auth/login_screen.dart';
 import 'presentation/screens/client/home/home_screen.dart';
+import 'presentation/screens/admin/admin_dashboard_screen.dart';
 import 'l10n/app_localizations.dart';
 
 void main() {
@@ -36,6 +38,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => AdminProvider()),  // ✅ AJOUTEZ CETTE LIGNE
       ],
       child: MaterialApp(
         title: 'Parking Intelligent',
@@ -90,8 +93,7 @@ class AuthWrapper extends StatelessWidget {
     
     if (authProvider.isLoggedIn) {
       if (authProvider.user?.role == 'admin') {
-        // TODO: Importer AdminDashboardScreen
-        return const HomeScreen();
+        return const AdminDashboardScreen();
       }
       return const HomeScreen();
     }

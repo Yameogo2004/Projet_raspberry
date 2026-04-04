@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import '../../l10n/app_localizations.dart';
-import '../../main.dart';
+import 'package:app_mobile/l10n/app_localizations.dart';
+import 'package:app_mobile/main.dart';
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});

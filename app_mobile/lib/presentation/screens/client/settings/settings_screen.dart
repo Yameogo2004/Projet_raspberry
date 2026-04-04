@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'language_screen.dart';
+import 'package:app_mobile/presentation/screens/client/settings/language_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});

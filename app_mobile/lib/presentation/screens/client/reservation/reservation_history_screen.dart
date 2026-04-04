@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../data/services/api_service.dart';
-import '../../../data/models/reservation_history.dart';
+import '../../../../data/services/api_service.dart';
+import '../../../../data/models/reservation_history.dart';
 
 class ReservationHistoryScreen extends StatefulWidget {
   const ReservationHistoryScreen({super.key});

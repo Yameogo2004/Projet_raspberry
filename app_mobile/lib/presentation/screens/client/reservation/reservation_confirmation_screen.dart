@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:math' as math;
-import '../../../data/services/api_service.dart';
-import '../../../presentation/widgets/custom_button.dart';
-import '../../../presentation/widgets/custom_text_field.dart';
+import '../../../../data/services/api_service.dart';
+import '../../../widgets/buttons/custom_button.dart';
+import '../../../widgets/fields/custom_text_field.dart';
 
 class ReservationFormScreen extends StatefulWidget {
   const ReservationFormScreen({super.key});

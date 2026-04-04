@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../data/services/api_service.dart';
-import '../../../presentation/widgets/custom_button.dart';
+import '../../../../data/services/api_service.dart';
+import '../../../widgets/buttons/custom_button.dart';
 
 class LocateVehicleScreen extends StatefulWidget {
   const LocateVehicleScreen({super.key});
