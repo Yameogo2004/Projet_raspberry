@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   
+  flutter_localizations:
+    sdk: flutter
+  
   # UI
   cupertino_icons: ^1.0.6
   
@@ -24,23 +27,23 @@ dependencies:
   provider: ^6.0.5
   
   # Utilitaires
-  intl: ^0.18.1
+  intl: ^0.20.2
   qr_flutter: ^4.1.0
   
-  # GÉOLOCALISATION (AJOUTÉ)
+  # Géolocalisation
   geolocator: ^10.1.0
   
-  # CAMÉRA ET IMAGES (POUR CAPTURE CONDUCTEUR)
+  # Caméra et images
   image_picker: ^1.0.5
   camera: ^0.10.5
   
-  # SCAN QR CODE
+  # Scan QR code
   mobile_scanner: ^3.5.0
   
-  # NOTIFICATIONS
+  # Notifications
   flutter_local_notifications: ^15.1.0
   
-  # GRAPHIQUES STATISTIQUES
+  # Graphiques
   fl_chart: ^0.66.0
 
 dev_dependencies:
@@ -50,7 +53,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  
-  # Ajouter des assets si nécessaire
-  # assets:
-  #   - assets/images/

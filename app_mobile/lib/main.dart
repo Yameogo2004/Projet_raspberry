@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/home/home_screen.dart';
+import 'l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(newLocale);
+  }
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('fr');
+
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +40,27 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Parking Intelligent',
         debugShowCheckedModeBanner: false,
+        locale: _locale,
+        supportedLocales: const [
+          Locale('fr', ''),
+          Locale('en', ''),
+          Locale('es', ''),
+          Locale('ar', ''),
+        ],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale?.languageCode) {
+              return supportedLocale;
+            }
+          }
+          return const Locale('fr');
+        },
         theme: ThemeData(
           primarySwatch: Colors.blue,
           useMaterial3: true,
